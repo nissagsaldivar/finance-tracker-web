@@ -1,36 +1,47 @@
 import { ResponsivePie } from "@nivo/pie";
 import { useEffect, useState } from "react";
+import AddSpending from "./AddSpending"; // import the form
 
 export default function PieChart() {
-  //store the chart data from the backend
   const [data, setData] = useState([]);
 
-  //get data from the backend when the component loads
+  // pull this out so we can call it again after adding
+  const fetchData = () => {
+    fetch("http://localhost:3001/finance-data")
+      .then((res) => res.json())
+      .then((res) => setData(res.items));
+  };
+
+  // fetch on mount
   useEffect(() => {
-    fetch("http://localhost:3001/finance-data") //hit the api's endpoint, 3001
-      .then((res) => res.json()) //get a JSON responseresponse
-      .then((res) => setData(res.items)); //get what's coming from the api's array and save to state
-  }, []); //empty array = only runs once on mount (claude suggestion)
+    fetchData();
+  }, []);
 
   return (
-    <div style={{ height: 400 }}>
-      <ResponsivePie
-        data={data}
-        colors={{ scheme: "pastel1" }}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-        innerRadius={0.5}
-        padAngle={0.7}
-        cornerRadius={3}
-        activeOuterRadiusOffset={8}
-        legends={[{
-          anchor: "bottom",
-          direction: "row",
-          translateY: 56,
-          itemWidth: 80,
-          itemHeight: 18,
-          symbolSize: 18,
-        }]}
-      />
+    <div>
+      {/* form to add new spending */}
+      <AddSpending onAdd={fetchData} />
+
+      {/* pie chart */}
+      <div style={{ height: 400 }}>
+        <ResponsivePie
+          data={data}
+          colors={{ scheme: "pastel1" }}
+          margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+          innerRadius={0.5}
+          padAngle={0.7}
+          cornerRadius={3}
+          activeOuterRadiusOffset={8}
+          legends={[{
+            anchor: "bottom",
+            direction: "row",
+            translateY: 56,
+            itemWidth: 80,
+            itemHeight: 18,
+            symbolSize: 18,
+          }]}
+        />
+      </div>
     </div>
   );
 }
