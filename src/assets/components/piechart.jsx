@@ -1,29 +1,17 @@
 import { ResponsivePie } from "@nivo/pie";
+import { useSpending } from "./SpendingContext";
 import { useEffect, useState } from "react";
 import AddSpending from "./AddSpending"; // import the AddSpending capability
 import RemoveSpending from "./RemoveSpending"; // import the RemoveSpending capability
 
 export default function PieChart() {
-  const [data, setData] = useState([]);
-
-  // pull this out so we can call it again after adding
-  const fetchData = () => {
-    fetch("http://localhost:3001/finance-data")
-      .then((res) => res.json())
-      .then((res) => setData(res.items));
-  };
-
-  // fetch on mount
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // grab data directly from context instead of managing it here
+  const { data } = useSpending();
 
   return (
     <div>
-      {}
-      <AddSpending onAdd={fetchData} />
-      <RemoveSpending data={data} onRemove={fetchData} />
-      {}
+      <AddSpending />
+      <RemoveSpending />
       <div style={{ height: 400 }}>
         <ResponsivePie
           data={data}
