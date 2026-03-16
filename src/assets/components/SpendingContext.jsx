@@ -7,6 +7,9 @@ const SpendingContext = createContext();
 export function SpendingProvider({ children }) {
   const [data, setData] = useState([]);
 
+  // sum all values in the data array
+  const total = data.reduce((sum, item) => sum + item.value, 0);
+
   const fetchData = () => {
     fetch("http://localhost:3001/finance-data")
       .then((res) => res.json())
@@ -19,7 +22,7 @@ export function SpendingProvider({ children }) {
   }, []);
 
   return (
-    <SpendingContext.Provider value={{ data, fetchData }}>
+    <SpendingContext.Provider value={{ data, fetchData, total }}>
       {children}
     </SpendingContext.Provider>
   );

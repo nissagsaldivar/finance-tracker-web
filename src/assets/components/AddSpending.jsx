@@ -1,37 +1,94 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
 
-// this component is used to add a spending item to the chart, AKA AddSpending
-export default function AddSpending({ onAdd }) {
+export default function AddSpending() {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
-  const { fetchData } = useSpending(); // grab fetchData from context
+  const { fetchData } = useSpending(); // grab fetchData from context instead of onAdd prop
 
   const handleSubmit = () => {
-    // add error handling, basically dont submit if the two requiredfields are empty
     if (!category || !amount) return;
-
-    // send the new item to the backend
     fetch("http://localhost:3001/finance-data", {
-      method: "POST", // this is the method of the fetch request
-      headers: { "Content-Type": "application/json" }, // this is the header of the fetch request
-      body: JSON.stringify({ category, amount: Number(amount) }), 
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ category, amount: Number(amount) }),
     })
       .then((res) => res.json())
       .then(() => {
-        fetchData(); // this is the function that is called when the fetch request is successful
-        setCategory(""); // sets the category to an empty string
-        setAmount(""); // sets the amount to an empty string
+        fetchData(); // use fetchData from context instead of onAdd
+        setCategory("");
+        setAmount("");
       });
   };
 
-  // this return will now use the context to add a spending item to the chart
   return (
-    <div>
-      <h3>Add Spending</h3> //
-      <input type="text" placeholder="Category" value={category} onChange={(event) => setCategory(event.target.value)} /> 
-      <input type="number" placeholder="Amount" value={amount} onChange={(event) => setAmount(event.target.value)} />
-      <button onClick={handleSubmit}>Add</button>
+    <div style={styles.card}>
+      <h3 style={styles.title}>Add An Item</h3>
+      <div style={styles.row}>
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        />
+        <input
+          style={styles.input}
+          type="number"
+          placeholder="Amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button style={{ ...styles.button, background: "#e8a0bf" }} onClick={handleSubmit}>
+          Add
+        </button>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  card: {
+    background: "#fdf0f8",
+    border: "1px solid #e8c4d8",
+    borderRadius: "16px",
+    padding: "20px 24px",
+    marginBottom: "12px",
+  },
+  title: {
+    color: "#c2527a",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    fontStyle: "italic",
+    letterSpacing: "0.05em",
+    marginBottom: "12px",
+  },
+  row: {
+    display: "flex",
+    gap: "10px",
+    alignItems: "stretch",
+  },
+  input: {
+    background: "#fff",
+    border: "1px solid #e8c4d8",
+    borderRadius: "10px",
+    color: "#4a2040",
+    padding: "10px 14px",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    outline: "none",
+    flex: 1,
+    height: "42px",
+  },
+  button: {
+    color: "#4a2040",
+    border: "none",
+    borderRadius: "10px",
+    padding: "0 24px",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    fontWeight: "bold",
+    cursor: "pointer",
+    height: "42px",
+  },
+};

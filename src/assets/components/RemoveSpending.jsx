@@ -1,40 +1,85 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
 
-// this component is used to remove a spending item from the chart, AKA RemoveSpending!
 export default function RemoveSpending() {
   const [selected, setSelected] = useState("");
-  const { data, fetchData } = useSpending(); // grab data and fetchData from context
+  const { data, fetchData } = useSpending();
 
-
-  // this is the function thats used to remove the spending item from the chart
   const handleRemove = () => {
     if (!selected) return;
-
-    // this is the fetch request to remove the spending item from the chart
-    fetch(`http://localhost:3001/finance-data/${selected}`, {
-      method: "DELETE",
-    })
-      // this is the response from the fetch request
+    fetch(`http://localhost:3001/finance-data/${selected}`, { method: "DELETE" })
       .then((res) => res.json())
-      // this is the function that is called when the fetch request is successful
       .then(() => {
-        fetchData(); // refresh the chart on deletion
+        fetchData();
         setSelected("");
       });
   };
 
-  // this return will now use context to remove a spending item from the chart
   return (
-    <div>
-      <h3>Remove Spending</h3>
-      <select value={selected} onChange={(event) => setSelected(event.target.value)}>
-        <option value="">Pick a Category</option>
-        {data.map((item) => (
-          <option key={item.id} value={item.id}>{item.id}</option>
-        ))}
-      </select>
-      <button onClick={handleRemove}>Remove</button>
+    <div style={styles.card}>
+      <h3 style={styles.title}>Remove An Item</h3>
+      <div style={styles.row}>
+        <select
+          style={styles.select}
+          value={selected}
+          onChange={(e) => setSelected(e.target.value)}
+        >
+          <option value="">Select a category</option>
+          {data.map((item) => (
+            <option key={item.id} value={item.id}>{item.id}</option>
+          ))}
+        </select>
+        <button style={{ ...styles.button, background: "#f4a7b9" }} onClick={handleRemove}>
+          Remove
+        </button>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  card: {
+    background: "#fdf0f8",
+    border: "1px solid #e8c4d8",
+    borderRadius: "16px",
+    padding: "20px 24px",
+    marginBottom: "12px",
+  },
+  title: {
+    color: "#c2527a",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    fontStyle: "italic",
+    letterSpacing: "0.05em",
+    marginBottom: "12px",
+  },
+  row: {
+    display: "flex",
+    gap: "10px",
+    alignItems: "stretch",
+  },
+  select: {
+    background: "#fff",
+    border: "1px solid #e8c4d8",
+    borderRadius: "10px",
+    color: "#4a2040",
+    padding: "10px 14px",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    outline: "none",
+    flex: 1,
+    height: "42px",
+    cursor: "pointer",
+  },
+  button: {
+    color: "#4a2040",
+    border: "none",
+    borderRadius: "10px",
+    padding: "0 24px",
+    fontSize: "14px",
+    fontFamily: "Times New Roman, serif",
+    fontWeight: "bold",
+    cursor: "pointer",
+    height: "42px",
+  },
+};
