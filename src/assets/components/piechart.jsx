@@ -3,6 +3,7 @@ import { useSpending } from "./SpendingContext";
 import { useEffect, useState } from "react";
 import AddSpending from "./AddSpending"; // import the AddSpending capability
 import RemoveSpending from "./RemoveSpending"; // import the RemoveSpending capability
+import MonthlyBudget from "./MonthlyBudget";
 
 export default function PieChart() {
   // grab data directly from context instead of managing it here
@@ -10,6 +11,7 @@ export default function PieChart() {
 
   return (
     <div>
+      <MonthlyBudget />
       <AddSpending />
       <RemoveSpending />
       <div style={{ height: 400 }}>

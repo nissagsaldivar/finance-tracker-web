@@ -3,11 +3,15 @@ import { useSpending } from "./SpendingContext";
 
 export default function RemoveSpending() {
   const [selected, setSelected] = useState("");
-  const { data, fetchData } = useSpending();
+  const { data, fetchData, yearMonth } = useSpending();
 
   const handleRemove = () => {
     if (!selected) return;
-    fetch(`http://localhost:3001/finance-data/${selected}`, { method: "DELETE" })
+    const q = new URLSearchParams({ yearMonth });
+    fetch(
+      `http://localhost:3001/finance-data/${encodeURIComponent(selected)}?${q}`,
+      { method: "DELETE" }
+    )
       .then((res) => res.json())
       .then(() => {
         fetchData();

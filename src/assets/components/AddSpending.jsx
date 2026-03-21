@@ -4,14 +4,14 @@ import { useSpending } from "./SpendingContext";
 export default function AddSpending() {
   const [category, setCategory] = useState("");
   const [amount, setAmount] = useState("");
-  const { fetchData } = useSpending(); // grab fetchData from context instead of onAdd prop
+  const { fetchData, yearMonth } = useSpending();
 
   const handleSubmit = () => {
     if (!category || !amount) return;
     fetch("http://localhost:3001/finance-data", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ category, amount: Number(amount) }),
+      body: JSON.stringify({ category, amount: Number(amount), yearMonth,}),
     })
       .then((res) => res.json())
       .then(() => {

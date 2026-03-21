@@ -3,7 +3,7 @@ import { SpendingProvider, useSpending } from './assets/components/SpendingConte
 import './App.css'
 
 function Total() {
-  const { total } = useSpending();
+  const { totalSpent, budgetAmount, remaining } = useSpending();
   return (
     <div style={{
       background: "#fdf0f8",
@@ -12,12 +12,23 @@ function Total() {
       padding: "20px 24px",
       marginTop: "12px",
       fontFamily: "Times New Roman, serif",
-      fontStyle: "italic",
-      color: "#c2527a",
-      fontSize: "20px",
-      letterSpacing: "0.05em",
+      color: "#4a2040",
+      fontSize: "17px",
+      letterSpacing: "0.03em",
     }}>
-      Total Spent: ${total}
+      <div style={{ fontStyle: "italic", color: "#c2527a", marginBottom: "8px" }}>
+        Total spent: <strong>${totalSpent}</strong>
+      </div>
+      {budgetAmount != null && (
+        <div style={{ fontSize: "15px", marginTop: "4px" }}>
+          Budget: ${budgetAmount}
+          {remaining != null && (
+            <span style={{ marginLeft: "12px", color: remaining < 0 ? "#b03030" : "#2d6a4f" }}>
+              Remaining: ${remaining}
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
