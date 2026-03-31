@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState} from "react";
+import { getFinanceData } from "../../api/financeDataApi";
 
 function defaultYearMonth() {
   const d = new Date();
@@ -17,9 +18,7 @@ export function SpendingProvider({ children }) {
   const [totalSpent, setTotalSpent] = useState(0);
 
   const fetchData = useCallback(() => {
-    const q = new URLSearchParams({ yearMonth });
-    return fetch(`http://localhost:3001/finance-data?${q}`)
-      .then((res) => res.json())
+      getFinanceData(yearMonth)
       .then((res) => {
         setData(res.items ?? []);
         if (res.yearMonth) setYearMonth(res.yearMonth);
