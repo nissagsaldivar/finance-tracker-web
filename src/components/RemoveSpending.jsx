@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
+import { deleteFinanceCategory } from "../api/financeDataApi";
 
 export default function RemoveSpending() {
   const [selected, setSelected] = useState("");
@@ -7,12 +8,7 @@ export default function RemoveSpending() {
 
   const handleRemove = () => {
     if (!selected) return;
-    const q = new URLSearchParams({ yearMonth });
-    fetch(
-      `http://localhost:3001/finance-data/${encodeURIComponent(selected)}?${q}`,
-      { method: "DELETE" }
-    )
-      .then((res) => res.json())
+    deleteFinanceCategory(yearMonth, selected)
       .then(() => {
         fetchData();
         setSelected("");

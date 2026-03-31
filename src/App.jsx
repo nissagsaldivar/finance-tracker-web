@@ -1,5 +1,5 @@
-import PieChart from './assets/components/piechart'
-import { SpendingProvider, useSpending } from './assets/components/SpendingContext'
+import PieChart from './components/piechart'
+import { SpendingProvider, useSpending } from './components/SpendingContext'
 import './App.css'
 
 function Total() {

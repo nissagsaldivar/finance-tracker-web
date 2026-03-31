@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
+import { createFinanceCategory } from "../api/financeDataApi";
 
 export default function AddSpending() {
   const [category, setCategory] = useState("");
@@ -8,12 +9,7 @@ export default function AddSpending() {
 
   const handleSubmit = () => {
     if (!category || !amount) return;
-    fetch("http://localhost:3001/finance-data", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ category, amount: Number(amount), yearMonth,}),
-    })
-      .then((res) => res.json())
+    createFinanceCategory(category, amount, yearMonth)
       .then(() => {
         fetchData(); // use fetchData from context instead of onAdd
         setCategory("");
