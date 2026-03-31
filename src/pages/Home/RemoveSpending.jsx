@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
-import { deleteFinanceCategory } from "../api/financeDataApi";
+import { deleteFinanceCategory } from "../../api/financeDataApi";
 
 export default function RemoveSpending() {
   const [selected, setSelected] = useState("");

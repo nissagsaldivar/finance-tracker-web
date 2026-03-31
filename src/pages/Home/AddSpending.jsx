@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
-import { createFinanceCategory } from "../api/financeDataApi";
+import { createFinanceCategory } from "../../api/financeDataApi";
 
 export default function AddSpending() {
   const [category, setCategory] = useState("");

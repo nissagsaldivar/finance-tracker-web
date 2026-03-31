@@ -1,5 +1,5 @@
-import PieChart from '../../components/piechart'
-import { SpendingProvider } from '../../components/SpendingContext'
+import PieChart from './piechart'
+import { SpendingProvider } from './SpendingContext'
 import Total from './Total'
 
 export default function Home() {

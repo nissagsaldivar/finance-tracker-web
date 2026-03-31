@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState} from "react";
-import { getFinanceData } from "../api/financeDataApi";
+import { getFinanceData } from "../../api/financeDataApi";
 
 function defaultYearMonth() {
   const d = new Date();

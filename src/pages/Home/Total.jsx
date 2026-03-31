@@ -1,4 +1,4 @@
-import { useSpending } from '../../components/SpendingContext'
+import { useSpending } from './SpendingContext'
 
 export default function Total() {
     const { totalSpent, budgetAmount, remaining } = useSpending();
