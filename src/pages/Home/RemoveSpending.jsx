@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
 import { deleteFinanceCategory } from "../../api/financeDataApi";
+import Button from "../../components/Button/Button";
 
 export default function RemoveSpending() {
   const [selected, setSelected] = useState("");
@@ -29,9 +30,7 @@ export default function RemoveSpending() {
             <option key={item.id} value={item.id}>{item.id}</option>
           ))}
         </select>
-        <button style={{ ...styles.button, background: "#f4a7b9" }} onClick={handleRemove}>
-          Remove
-        </button>
+        <Button label="Remove" onClick={handleRemove} color="salmon" disabled={true} />
       </div>
     </div>
   );
@@ -70,16 +69,5 @@ const styles = {
     flex: 1,
     height: "42px",
     cursor: "pointer",
-  },
-  button: {
-    color: "#4a2040",
-    border: "none",
-    borderRadius: "10px",
-    padding: "0 24px",
-    fontSize: "14px",
-    fontFamily: "Times New Roman, serif",
-    fontWeight: "bold",
-    cursor: "pointer",
-    height: "42px",
   },
 };

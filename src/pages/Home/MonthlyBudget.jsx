@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSpending } from "./SpendingContext";
+import Button from "../../components/Button/Button";
 
 export default function MonthlyBudgetPanel() {
   const {
@@ -51,13 +52,7 @@ export default function MonthlyBudgetPanel() {
             onChange={(e) => setBudgetInput(e.target.value)}
           />
         </label>
-        <button
-          type="button"
-          style={{ ...styles.button, background: "#d4a5e8", alignSelf: "flex-end" }}
-          onClick={saveBudget}
-        >
-          Save budget
-        </button>
+        <Button label="Save budget" onClick={saveBudget} color="red" styles={{ alignSelf: "flex-end" }} />
       </div>
       {remaining != null && (
         <p style={styles.hint}>
@@ -117,17 +112,6 @@ const styles = {
     outline: "none",
     height: "42px",
     boxSizing: "border-box",
-  },
-  button: {
-    color: "#4a2040",
-    border: "none",
-    borderRadius: "10px",
-    padding: "0 24px",
-    fontSize: "14px",
-    fontFamily: "Times New Roman, serif",
-    fontWeight: "bold",
-    cursor: "pointer",
-    height: "42px",
   },
   hint: {
     margin: "14px 0 0",

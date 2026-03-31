@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSpending } from "./SpendingContext";
 import { createFinanceCategory } from "../../api/financeDataApi";
+import Button from "../../components/Button/Button";
 
 export default function AddSpending() {
   const [category, setCategory] = useState("");
@@ -35,9 +36,7 @@ export default function AddSpending() {
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <button style={{ ...styles.button, background: "#e8a0bf" }} onClick={handleSubmit}>
-          Add
-        </button>
+        <Button label="Add" onClick={handleSubmit} color="purple" />
       </div>
     </div>
   );
@@ -76,15 +75,5 @@ const styles = {
     flex: 1,
     height: "42px",
   },
-  button: {
-    color: "#4a2040",
-    border: "none",
-    borderRadius: "10px",
-    padding: "0 24px",
-    fontSize: "14px",
-    fontFamily: "Times New Roman, serif",
-    fontWeight: "bold",
-    cursor: "pointer",
-    height: "42px",
-  },
+ 
 };
